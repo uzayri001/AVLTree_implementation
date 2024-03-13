@@ -7,12 +7,12 @@
  */
 
 public class Node {
-    int data;
+    Statements data;
     Node left;
     Node right;
     int height;
 
-    public Node(int data) {
+    public Node(Statements data) {
         this.data = data;
         height = 0;
     }

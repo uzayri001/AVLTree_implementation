@@ -79,22 +79,22 @@ public class AVLTree {
         }
     }
 
-    public Node searchByTerm(int term) {return searchHelperByTerm(root, term);}
-    private Node searchHelperByTerm(Node root, int term) {
+    public Node searchByTerm(String term) {return searchHelperByTerm(root, term);}
+    private Node searchHelperByTerm(Node root, String term) {
         if (root == null) {return null;}
-        else if (root.data == term) {return root;}
-        else if (root.data < term) {return searchHelperByTerm(root.left, term);}
+        else if (root.data.compareTerm(term) == 0) {return root;}
+        else if (root.data.compareTerm(term) == 1) {return searchHelperByTerm(root.left, term);}
         else {return searchHelperByTerm(root.right, term);}
     }
 
     public void insert(Node node) { root = insertHelper(root, node); }
     private Node insertHelper(Node root, Node node) {
-        int statement = node.data;
+        Statements statement = node.data;
         if (root == null) {
             root = node;
             return root;
         }
-        else if (statement < root.data ) {
+        else if (statement.compareTerm(root.data.getTerm()) == -1) {
             root.left = insertHelper(root.left, node);
         }
         else {
@@ -104,17 +104,17 @@ public class AVLTree {
         root.height = Math.max(height(root.left),height(root.right)) + 1;
         int balance = getBalance(root);
 
-        if (balance > 1 && node.data < root.data) {
+        if (balance > 1 && node.data.sortAlphabetical(root.data) <0) {
             return rightRotation(root);
         }
-        else if (balance < -1 && node.data > root.data) {
+        else if (balance < -1 && node.data.sortAlphabetical(root.data) >0) {
             return leftRotation(root);
         }
-        else if (balance >1 && node.data > root.data) {
+        else if (balance >1 && node.data.sortAlphabetical(root.data) >0) {
             root.left = leftRotation(root.left);
             return rightRotation(root);
         }
-        else if (balance < -1 && node.data < root.data) {
+        else if (balance < -1 && node.data.sortAlphabetical(root.data) <0 ) {
             root.right = rightRotation(root.right);
             return leftRotation(root);
         }
