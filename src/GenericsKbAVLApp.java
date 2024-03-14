@@ -11,7 +11,21 @@ public class GenericsKbAVLApp {
             System.out.println("Choose an action from the menu: \n 1. Load a knowledge base from a file \n 2. Add a new statement to the knowledge base \n 3. Search for an item in the knowledge base by term \n 4. Search for a item in the knowledge base by term and sentence \n 5. Quit \n Enter your choice: \n");
             int input = kb.nextInt();
             kb.nextLine();
-            if (input == 5) {break;}
+            if (input == 1) {
+                try {
+                    System.out.println("Enter file name:");
+                    String fileName = kb.nextLine();
+                    File myFile = new File(fileName);
+                    Scanner reader = new Scanner(myFile);
+                    while (reader.hasNextLine()) {
+                      String data = reader.nextLine();
+                      System.out.println(data);
+                    }
+                    reader.close();
+                } 
+                catch (FileNotFoundException e) {System.out.println("An error occurred.");}
+            }
+            else if (input == 5) {break;}
         }
         kb.close();
     }
