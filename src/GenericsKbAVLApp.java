@@ -1,32 +1,40 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-public class GenericsKbAVLApp {
-    
-    public static void main(String [] args) {
-        AVLTree myAvlTree = new AVLTree();
-        Scanner kb = new Scanner(System.in);
 
-        while (true) {
-            System.out.println("Choose an action from the menu: \n 1. Load a knowledge base from a file \n 2. Add a new statement to the knowledge base \n 3. Search for an item in the knowledge base by term \n 4. Search for a item in the knowledge base by term and sentence \n 5. Quit \n Enter your choice: \n");
-            int input = kb.nextInt();
-            kb.nextLine();
-            if (input == 1) {
-                try {
-                    System.out.println("Enter file name:");
+public class GenericsKbAVLApp {
+    public static void main(String [] args) {
+        try (Scanner kb = new Scanner(System.in)) {
+            AVLTree myAVLTree = new AVLTree();
+            while (true) {
+                System.out.println("Choose an action from the menu:\n 1. Load a knowledge base from a file \n 2. Load in a query file and search for terms \n 3. Quit");
+                System.out.print("Enter your choice: ");
+                int input = kb.nextInt();
+                kb.nextLine();
+                if (input == 1) {
+                    System.out.println("Enter the file name: ");
                     String fileName = kb.nextLine();
-                    File myFile = new File(fileName);
-                    Scanner reader = new Scanner(myFile);
-                    while (reader.hasNextLine()) {
-                      String data = reader.nextLine();
-                      System.out.println(data);
+                    try {
+                        File myFile = new File(fileName);
+                        try (Scanner myScanner = new Scanner(myFile)) {
+                            while (myScanner.hasNextLine()) {
+                                String line = myScanner.nextLine(); 
+                                Statements data = new Statements(line);
+                                Node newNode = new Node(data);
+                                myAVLTree.insert(newNode);       
+                            }
+                        }
                     }
-                    reader.close();
-                } 
-                catch (FileNotFoundException e) {System.out.println("An error occurred.");}
+                    catch (FileNotFoundException e) {
+                        System.out.println("File not found");
+                    }
+                    myAVLTree.preOrder();
+                }
+
+                else if (input == 2) {}
+                
+                else if (input == 3) {break;}     
             }
-            else if (input == 5) {break;}
         }
-        kb.close();
     }
 }
