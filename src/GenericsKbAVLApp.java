@@ -31,7 +31,25 @@ public class GenericsKbAVLApp {
                     myAVLTree.preOrder();
                 }
 
-                else if (input == 2) {}
+                else if (input == 2) {
+                    System.out.println("Enter the file name: ");
+                    String fileName = kb.nextLine();
+                    try {
+                        File myQueryFile = new File(fileName);
+                        try (Scanner myScanner = new Scanner(myQueryFile)) {
+                            while (myScanner.hasNextLine()) {
+                                String term = myScanner.nextLine();
+                                if (myAVLTree.searchByTerm(term) != null) {
+                                    System.out.println(myAVLTree.searchByTerm(term));
+                                }
+                                else {System.out.printf("Term for %s is not in the knowledge base", term);}
+                            }
+                        }
+                    }
+                    catch (FileNotFoundException e) {
+                        System.out.println("File not found");
+                    }
+                }
                 
                 else if (input == 3) {break;}     
             }
