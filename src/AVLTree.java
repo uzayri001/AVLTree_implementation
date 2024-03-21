@@ -83,7 +83,7 @@ public class AVLTree {
     private Node searchHelperByTerm(Node root, String term) {
         if (root == null) {return null;}
         else if (root.data.compareTerm(term) == 0) {return root;}
-        else if (root.data.compareTerm(term) == 1) {return searchHelperByTerm(root.left, term);}
+        else if (root.data.compareTerm(term) > 0) {return searchHelperByTerm(root.left, term);}
         else {return searchHelperByTerm(root.right, term);}
     }
 
@@ -94,7 +94,7 @@ public class AVLTree {
             root = node;
             return root;
         }
-        else if (statement.compareTerm(root.data.getTerm()) == -1) {
+        else if (statement.compareTerm(root.data.getTerm()) < 0) {
             root.left = insertHelper(root.left, node);
         }
         else {

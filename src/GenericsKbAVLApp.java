@@ -28,7 +28,6 @@ public class GenericsKbAVLApp {
                     catch (FileNotFoundException e) {
                         System.out.println("File not found");
                     }
-                    myAVLTree.preOrder();
                 }
 
                 else if (input == 2) {
@@ -42,7 +41,7 @@ public class GenericsKbAVLApp {
                                 if (myAVLTree.searchByTerm(term) != null) {
                                     System.out.println(myAVLTree.searchByTerm(term));
                                 }
-                                else {System.out.printf("Term for %s is not in the knowledge base", term);}
+                                else {System.out.printf("Term for %s is not in the knowledge base \n", term);}
                             }
                         }
                     }

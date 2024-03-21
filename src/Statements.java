@@ -75,13 +75,8 @@ public class Statements {
      */
     public int compareTerm(String other) {
         String thisTerm = this.getTerm();
-        if (other.equalsIgnoreCase(thisTerm)) {
-            return 0;
-        }
-        else if (thisTerm.charAt(0) - other.charAt(0) < 0) {return -1;}
-        else {
-            return 1;
-        }
+        int result = thisTerm.compareToIgnoreCase(other);
+        return result;
     }
 
    /**
@@ -115,6 +110,6 @@ public class Statements {
      
     @Override
     public String toString() {
-        return this.getTerm() + "\t" + this.getSentence() + "\t" + this.getConfidenceRating() + "\n";
+        return this.getTerm() + "\t" + this.getSentence() + "\t" + this.getConfidenceRating();
     }
 }

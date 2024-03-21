@@ -16,4 +16,8 @@ public class Node {
         this.data = data;
         height = 0;
     }
+
+    public @Override String toString() {
+        return data.toString();
+    }
 }
