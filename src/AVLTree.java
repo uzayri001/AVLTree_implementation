@@ -3,6 +3,8 @@ import java.util.Stack;
 public class AVLTree {
 
     Node root;
+    int searchCount = 0;
+    int insertCount = 0;
 
     public int height(Node node) {
         if (node == null) {return -1;}
@@ -81,10 +83,22 @@ public class AVLTree {
 
     public Node searchByTerm(String term) {return searchHelperByTerm(root, term);}
     private Node searchHelperByTerm(Node root, String term) {
-        if (root == null) {return null;}
-        else if (root.data.compareTerm(term) == 0) {return root;}
-        else if (root.data.compareTerm(term) > 0) {return searchHelperByTerm(root.left, term);}
-        else {return searchHelperByTerm(root.right, term);}
+        if (root == null) {
+            searchCount ++;
+            return null;
+        }
+        else if (root.data.compareTerm(term) == 0) {
+            searchCount ++;
+            return root;
+        }
+        else if (root.data.compareTerm(term) > 0) {
+            searchCount ++;
+            return searchHelperByTerm(root.left, term);
+        }
+        else {
+            searchCount ++;
+            return searchHelperByTerm(root.right, term);
+        }
     }
 
     public void insert(Node node) { root = insertHelper(root, node); }
@@ -92,12 +106,15 @@ public class AVLTree {
         Statements statement = node.data;
         if (root == null) {
             root = node;
+            insertCount ++;
             return root;
         }
         else if (statement.compareTerm(root.data.getTerm()) < 0) {
+            insertCount ++;
             root.left = insertHelper(root.left, node);
         }
         else {
+            insertCount ++;
             root.right = insertHelper(root.right, node);
         }
         
@@ -105,17 +122,21 @@ public class AVLTree {
         int balance = getBalance(root);
 
         if (balance > 1 && node.data.sortAlphabetical(root.data) <0) {
+            insertCount ++;
             return rightRotation(root);
         }
         else if (balance < -1 && node.data.sortAlphabetical(root.data) >0) {
+            insertCount ++;
             return leftRotation(root);
         }
         else if (balance >1 && node.data.sortAlphabetical(root.data) >0) {
+            insertCount ++;
             root.left = leftRotation(root.left);
             return rightRotation(root);
         }
         else if (balance < -1 && node.data.sortAlphabetical(root.data) <0 ) {
             root.right = rightRotation(root.right);
+            insertCount ++;
             return leftRotation(root);
         }
         return root;

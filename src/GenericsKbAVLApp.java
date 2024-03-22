@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class GenericsKbAVLApp {
@@ -7,7 +9,7 @@ public class GenericsKbAVLApp {
         try (Scanner kb = new Scanner(System.in)) {
             AVLTree myAVLTree = new AVLTree();
             while (true) {
-                System.out.println("Choose an action from the menu:\n 1. Load a knowledge base from a file \n 2. Load in a query file and search for terms \n 3. Quit");
+                System.out.println("Choose an action from the menu:\n 1. Load a knowledge base from a file \n 2. Load in a query file and search for terms \n 3. Quit and display count variables");
                 System.out.print("Enter your choice: ");
                 int input = kb.nextInt();
                 kb.nextLine();
@@ -50,7 +52,17 @@ public class GenericsKbAVLApp {
                     }
                 }
                 
-                else if (input == 3) {break;}     
+                else if (input == 3) {
+                    try {
+                        try (FileWriter myWriter = new FileWriter("Experiment.txt")) {
+                            String insertCount = String.format("Insert count: %d \n",myAVLTree.insertCount);
+                            String searchCount = String.format("Search count: %d \n",myAVLTree.searchCount);
+                            myWriter.write(insertCount + searchCount);
+                        }
+                        break;
+                    }
+                    catch (IOException e) {System.out.println("Writing unsuccesful");}
+                }     
             }
         }
     }
